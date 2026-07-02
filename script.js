@@ -553,8 +553,8 @@ function nextQuestion() {
 // ============================================================
 const CLOUD_CONFIG = {
   apiUrl: 'https://api.jsonbin.io/v3',
-  binId: localStorage.getItem('pq_bin_id') || null,
-  apiKey: localStorage.getItem('pq_api_key') || null,
+  binId: localStorage.getItem('pq_bin_id') || '6a46622ada38895dfe226111',
+  apiKey: localStorage.getItem('pq_api_key') || '$2a$10$OMWg6XNjQJqzJ9AXdsLhMuydVjMgzGz.Tj5mc4qtOiewPrCktlbBa',
 };
 
 async function fetchCloudHistory() {
