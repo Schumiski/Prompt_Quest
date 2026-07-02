@@ -1,0 +1,1044 @@
+/* ============================================================
+   PROMPT QUEST — STYLE
+   Futuristic terminal / mission-interface aesthetic
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+/* ---------- RESET ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- BASE ---------- */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'VT323', monospace;
+  color: #c0c8d4;
+}
+
+/* ---------- CRT OVERLAY ---------- */
+.crt::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.08) 0px,
+    rgba(0,0,0,0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+.crt::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ---------- SCANLINE ---------- */
+@keyframes scan {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+.scanline {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 255, 200, 0.04);
+  z-index: 1000;
+  pointer-events: none;
+  animation: scan 4s linear infinite;
+}
+
+/* ---------- APP CONTAINER ---------- */
+#app {
+  position: relative;
+  z-index: 1;
+  width: 820px;
+  max-width: 96vw;
+  max-height: 96vh;
+  background: #0d1117;
+  border: 3px solid #00ffc8;
+  border-radius: 4px;
+  padding: 22px 26px;
+  box-shadow:
+    0 0 30px rgba(0,255,200,0.08),
+    inset 0 0 60px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- TERMINAL HEADER ---------- */
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #00ffc8;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.terminal-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #00ffc8;
+  box-shadow: 0 0 8px rgba(0,255,200,0.4);
+  animation: blink 1s step-end infinite;
+  flex-shrink: 0;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+.terminal-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #00ffc8;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0,255,200,0.3);
+}
+
+.terminal-sub {
+  font-size: 13px;
+  color: rgba(0,255,200,0.25);
+  margin-left: auto;
+  letter-spacing: 1px;
+}
+
+/* ---------- SCREEN SYSTEM ---------- */
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  min-height: 400px;
+  animation: screenIn 0.5s ease;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- LANDING / MISSION BRIEFING ---------- */
+.landing-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.mission-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #ffdd00;
+  border: 1px solid rgba(255,221,0,0.2);
+  padding: 6px 16px;
+  text-shadow: 0 0 10px rgba(255,221,0,0.2);
+  margin-bottom: 4px;
+}
+
+.landing-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 32px;
+  color: #00ffc8;
+  text-shadow: 0 0 30px rgba(0,255,200,0.3);
+  line-height: 1.4;
+  letter-spacing: 4px;
+}
+
+/* Glitch effect */
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+}
+.glitch::before {
+  color: #ff0080;
+  animation: glitch1 3s infinite;
+  clip-path: inset(20% 0 60% 0);
+}
+.glitch::after {
+  color: #00ffff;
+  animation: glitch2 3s infinite;
+  clip-path: inset(60% 0 10% 0);
+}
+@keyframes glitch1 {
+  0%, 90%, 100% { opacity: 0; transform: none; }
+  92% { opacity: 0.6; transform: translate(-2px, 1px); }
+  94% { opacity: 0; transform: none; }
+  96% { opacity: 0.3; transform: translate(1px, -1px); }
+}
+@keyframes glitch2 {
+  0%, 85%, 100% { opacity: 0; transform: none; }
+  87% { opacity: 0.5; transform: translate(2px, -1px); }
+  89% { opacity: 0; transform: none; }
+  91% { opacity: 0.3; transform: translate(-1px, 1px); }
+}
+
+.landing-subtitle {
+  font-size: 20px;
+  color: rgba(0,255,200,0.5);
+  letter-spacing: 3px;
+}
+
+.landing-description {
+  max-width: 520px;
+  font-size: 17px;
+  color: rgba(200,210,230,0.6);
+  line-height: 1.7;
+  padding: 12px 16px;
+  background: rgba(0,255,200,0.02);
+  border-left: 2px solid rgba(0,255,200,0.1);
+  border-radius: 2px;
+  text-align: left;
+}
+
+.landing-description strong {
+  color: #00ffc8;
+  font-weight: normal;
+}
+
+/* Mission params */
+.mission-params {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.param {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 18px;
+  border: 1px solid rgba(0,255,200,0.1);
+  border-radius: 2px;
+  background: rgba(0,255,200,0.02);
+}
+
+.param-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: rgba(0,255,200,0.2);
+  letter-spacing: 2px;
+}
+
+.param-value {
+  font-size: 18px;
+  color: #00ffc8;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn-primary {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  padding: 16px 44px;
+  background: transparent;
+  border: 2px solid #00ffc8;
+  color: #00ffc8;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+.btn-primary:hover {
+  background: rgba(0,255,200,0.1);
+  box-shadow: 0 0 30px rgba(0,255,200,0.15);
+  transform: scale(1.02);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 12px 28px;
+  background: transparent;
+  border: 1px solid rgba(0,255,200,0.15);
+  color: rgba(0,255,200,0.3);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(0,255,200,0.3);
+  color: rgba(0,255,200,0.5);
+  background: rgba(0,255,200,0.04);
+}
+
+/* ---------- GAME INTERFACE ---------- */
+.game-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+/* Progress bar */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 14px;
+  background: rgba(0,255,200,0.06);
+  border: 1px solid rgba(0,255,200,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffc8, #00ff88);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(0,255,200,0.2);
+}
+
+.progress-text {
+  font-size: 16px;
+  color: rgba(0,255,200,0.5);
+  min-width: 80px;
+  text-align: right;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* Score */
+.score-display {
+  font-size: 16px;
+  color: #00ffc8;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.score-display .num {
+  font-size: 22px;
+  color: #ffdd00;
+  text-shadow: 0 0 10px rgba(255,221,0,0.3);
+}
+
+/* Question area */
+.question-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+}
+
+.question-number {
+  font-size: 14px;
+  color: rgba(0,255,200,0.25);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.question-text {
+  font-size: 20px;
+  color: #e0e8ff;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  background: rgba(0,255,200,0.02);
+  border-left: 3px solid rgba(0,255,200,0.15);
+  border-radius: 2px;
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(0,255,200,0.02);
+  border: 1px solid rgba(0,255,200,0.08);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 17px;
+  color: #c0c8d4;
+}
+
+.option:hover:not(.disabled) {
+  background: rgba(0,255,200,0.06);
+  border-color: rgba(0,255,200,0.2);
+  transform: translateX(4px);
+}
+
+.option .marker {
+  width: 24px; height: 24px;
+  border: 2px solid rgba(0,255,200,0.15);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: rgba(0,255,200,0.15);
+  flex-shrink: 0;
+}
+
+.option.selected .marker {
+  border-color: #00ffc8;
+  color: #00ffc8;
+  background: rgba(0,255,200,0.08);
+}
+
+.option.correct {
+  border-color: #00ff80 !important;
+  background: rgba(0,255,128,0.05) !important;
+}
+
+.option.correct .marker {
+  border-color: #00ff80 !important;
+  color: #00ff80 !important;
+  background: rgba(0,255,128,0.1) !important;
+}
+
+.option.wrong {
+  border-color: #ff4060 !important;
+  background: rgba(255,64,96,0.05) !important;
+}
+
+.option.wrong .marker {
+  border-color: #ff4060 !important;
+  color: #ff4060 !important;
+  background: rgba(255,64,96,0.1) !important;
+}
+
+.option.disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Feedback */
+.feedback {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 2px;
+  font-size: 17px;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.feedback.correct {
+  background: rgba(0,255,128,0.04);
+  border: 1px solid rgba(0,255,128,0.12);
+  color: #80ffb0;
+}
+
+.feedback.wrong {
+  background: rgba(255,64,96,0.04);
+  border: 1px solid rgba(255,64,96,0.12);
+  color: #ff8090;
+}
+
+.feedback .fb-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.feedback .fb-tip {
+  color: rgba(255,255,255,0.3);
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+/* Next button */
+.next-btn-wrap {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.next-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 12px 32px;
+  background: transparent;
+  border: 2px solid #00ffc8;
+  color: #00ffc8;
+  cursor: pointer;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.next-btn:hover {
+  background: rgba(0,255,200,0.08);
+  box-shadow: 0 0 20px rgba(0,255,200,0.1);
+}
+
+/* ---------- RESULT SCREEN ---------- */
+.result-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.result-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 24px;
+  letter-spacing: 3px;
+  margin-bottom: 2px;
+}
+
+.result-title.grade-0 { color: #ff4060; text-shadow: 0 0 30px rgba(255,64,96,0.3); }
+.result-title.grade-1 { color: #ff8040; text-shadow: 0 0 30px rgba(255,128,64,0.3); }
+.result-title.grade-2 { color: #ffdd00; text-shadow: 0 0 30px rgba(255,221,0,0.3); }
+.result-title.grade-3 { color: #00ffc8; text-shadow: 0 0 30px rgba(0,255,200,0.3); }
+
+.result-score {
+  font-size: 56px;
+  color: #ffdd00;
+  text-shadow: 0 0 20px rgba(255,221,0,0.2);
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.2;
+}
+
+.result-msg {
+  font-size: 20px;
+  color: rgba(0,255,200,0.5);
+  max-width: 440px;
+  line-height: 1.5;
+  margin: 4px 0;
+}
+
+.result-detail {
+  font-size: 14px;
+  color: rgba(255,255,255,0.15);
+}
+
+/* Stats */
+.result-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 20px;
+  border: 1px solid rgba(0,255,200,0.08);
+  border-radius: 2px;
+  background: rgba(0,255,200,0.02);
+  min-width: 110px;
+}
+
+.stat-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: rgba(0,255,200,0.2);
+  letter-spacing: 2px;
+}
+
+.stat-value {
+  font-size: 22px;
+  color: #00ffc8;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  padding-top: 10px;
+  border-top: 1px solid rgba(0,255,200,0.04);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(0,255,200,0.08);
+  flex-shrink: 0;
+}
+
+/* ---------- NAME INPUT ---------- */
+.name-input-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.name-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(0,255,200,0.4);
+  letter-spacing: 2px;
+}
+
+.name-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 16px;
+  background: rgba(0,255,200,0.03);
+  border: 2px solid rgba(0,255,200,0.2);
+  border-radius: 2px;
+  color: #00ffc8;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.name-input::placeholder {
+  color: rgba(0,255,200,0.2);
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: #00ffc8;
+  box-shadow: 0 0 20px rgba(0,255,200,0.15);
+  background: rgba(0,255,200,0.05);
+}
+
+/* ---------- RESULT PLAYER ---------- */
+.result-player {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #ffdd00;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,221,0,0.2);
+  border-radius: 2px;
+  background: rgba(255,221,0,0.03);
+  margin-bottom: 8px;
+}
+
+/* ---------- SECRET HISTORY SCREEN ---------- */
+#screen-history {
+  display: none;
+}
+
+#screen-history.active {
+  display: flex;
+}
+
+.history-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.history-header {
+  text-align: center;
+}
+
+.history-secret-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #ff4060;
+  border: 1px solid rgba(255,64,96,0.3);
+  padding: 6px 14px;
+  display: inline-block;
+  margin-bottom: 12px;
+  text-shadow: 0 0 10px rgba(255,64,96,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.history-main-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: #00ffc8;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.history-subtitle {
+  font-size: 16px;
+  color: rgba(0,255,200,0.3);
+}
+
+.history-stats-bar {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.history-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0,255,200,0.1);
+  border-radius: 2px;
+  background: rgba(0,255,200,0.02);
+  min-width: 120px;
+}
+
+.history-stat-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: rgba(0,255,200,0.25);
+  letter-spacing: 1px;
+}
+
+.history-stat-value {
+  font-size: 20px;
+  color: #ffdd00;
+}
+
+.history-table-wrap {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid rgba(0,255,200,0.08);
+  border-radius: 2px;
+  background: rgba(0,0,0,0.2);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.history-table th {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(0,255,200,0.4);
+  letter-spacing: 1px;
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0,255,200,0.1);
+  background: rgba(0,255,200,0.02);
+  position: sticky;
+  top: 0;
+}
+
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,255,200,0.03);
+  color: #c0c8d4;
+}
+
+.history-table tr:hover td {
+  background: rgba(0,255,200,0.03);
+}
+
+.history-table .rank-cell {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(0,255,200,0.3);
+}
+
+.history-table .score-cell {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #00ffc8;
+}
+
+.history-table .date-cell {
+  font-size: 13px;
+  color: rgba(0,255,200,0.25);
+}
+
+.history-table .empty-row td {
+  text-align: center;
+  color: rgba(0,255,200,0.2);
+  padding: 30px;
+  font-style: italic;
+}
+
+/* ---------- SYNC STATUS ---------- */
+.sync-status-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.sync-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: rgba(0,255,200,0.3);
+  letter-spacing: 1px;
+}
+
+.sync-status {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+
+.sync-ok {
+  color: #00ff80;
+  border: 1px solid rgba(0,255,128,0.3);
+  background: rgba(0,255,128,0.05);
+}
+
+.sync-off {
+  color: rgba(255,221,0,0.6);
+  border: 1px solid rgba(255,221,0,0.2);
+  background: rgba(255,221,0,0.03);
+}
+
+/* ---------- CLOUD CONFIG SECTION ---------- */
+.cloud-config-section {
+  padding: 14px;
+  border: 1px dashed rgba(0,255,200,0.15);
+  border-radius: 2px;
+  background: rgba(0,255,200,0.01);
+}
+
+.cloud-config-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(0,255,200,0.35);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.cloud-config-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.cloud-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cloud-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: rgba(0,255,200,0.3);
+  letter-spacing: 1px;
+}
+
+.cloud-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,255,200,0.15);
+  border-radius: 2px;
+  color: #00ffc8;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.cloud-input::placeholder {
+  color: rgba(0,255,200,0.15);
+}
+
+.cloud-input:focus {
+  outline: none;
+  border-color: #00ffc8;
+  background: rgba(0,255,200,0.03);
+}
+
+.cloud-config-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.btn-save-config, .btn-test-sync {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid rgba(0,255,200,0.2);
+  color: rgba(0,255,200,0.5);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-save-config:hover {
+  border-color: #00ffc8;
+  color: #00ffc8;
+  background: rgba(0,255,200,0.08);
+}
+
+.btn-test-sync:hover {
+  border-color: #ffdd00;
+  color: #ffdd00;
+  background: rgba(255,221,0,0.05);
+}
+
+.cloud-config-help {
+  font-size: 13px;
+  color: rgba(0,255,200,0.2);
+  line-height: 1.6;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 2px;
+}
+
+.cloud-config-help p {
+  margin-bottom: 8px;
+}
+
+.cloud-config-help ol {
+  margin-left: 18px;
+}
+
+.cloud-config-help strong {
+  color: #00ffc8;
+  font-weight: normal;
+}
+
+.history-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-danger {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid rgba(255,64,96,0.3);
+  color: rgba(255,64,96,0.5);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-danger:hover {
+  border-color: #ff4060;
+  color: #ff4060;
+  background: rgba(255,64,96,0.08);
+  box-shadow: 0 0 20px rgba(255,64,96,0.15);
+}
+
+/* ---------- SOUND TOGGLE ---------- */
+.sound-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(0,255,200,0.03);
+  border: 1px solid rgba(0,255,200,0.06);
+  color: rgba(0,255,200,0.15);
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-family: 'VT323', monospace;
+  transition: all 0.2s;
+}
+
+.sound-toggle:hover {
+  background: rgba(0,255,200,0.06);
+  border-color: rgba(0,255,200,0.12);
+  color: rgba(0,255,200,0.3);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 640px) {
+  #app { padding: 14px 12px; }
+  .terminal-title { font-size: 8px; }
+  .terminal-sub { font-size: 11px; }
+  .landing-title { font-size: 20px; letter-spacing: 2px; }
+  .landing-subtitle { font-size: 16px; }
+  .landing-description { font-size: 15px; padding: 10px; }
+  .mission-params { gap: 10px; }
+  .param { padding: 6px 12px; }
+  .question-text { font-size: 16px; padding: 10px; }
+  .option { font-size: 14px; padding: 10px 12px; }
+  .result-title { font-size: 18px; }
+  .result-score { font-size: 40px; }
+  .score-display .num { font-size: 18px; }
+  .btn-primary { font-size: 9px; padding: 14px 28px; }
+}
+
+@media (max-width: 480px) {
+  .landing-title { font-size: 16px; }
+  .landing-subtitle { font-size: 13px; }
+  .mission-badge { font-size: 6px; padding: 4px 10px; }
+  .param-value { font-size: 14px; }
+}

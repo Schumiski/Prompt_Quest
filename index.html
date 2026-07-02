@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Quest — Domine a arte de perguntar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="crt">
+
+<div class="scanline"></div>
+
+<button class="sound-toggle" id="sound-btn">🔊 SOM</button>
+
+<div id="app">
+
+  <!-- ========== SCREEN 1: LANDING / MISSION BRIEFING ========== -->
+  <section class="screen active" id="screen-landing">
+    <div class="terminal-header">
+      <span class="terminal-dot"></span>
+      <span class="terminal-title">PROMPT QUEST v1.0</span>
+      <span class="terminal-sub">_ MISSÃO: APRENDER PROMPTS _</span>
+    </div>
+
+    <div class="landing-content">
+      <div class="mission-badge">MISSÃO PRINCIPAL</div>
+
+      <h1 class="landing-title glitch" data-text="PROMPT QUEST">PROMPT QUEST</h1>
+
+      <p class="landing-subtitle">◆ Domine a arte de Perguntar! ◆</p>
+
+      <div class="landing-description">
+        <p>Responda <strong>10 perguntas</strong> sobre prompts, contexto, clareza e boas práticas no uso de Inteligências Artificiais.</p>
+        <p>Cada questão revela um segredo para se comunicar melhor com IA. Ao final, descubra seu nível como Operador de Prompt!</p>
+      </div>
+
+      <div class="name-input-wrap">
+        <label class="name-label" for="player-name">SEU NOME:</label>
+        <input type="text" id="player-name" class="name-input" placeholder="Digite seu nome..." maxlength="30">
+      </div>
+
+      <div class="mission-params">
+        <div class="param">
+          <span class="param-label">PERGUNTAS</span>
+          <span class="param-value">10</span>
+        </div>
+        <div class="param">
+          <span class="param-label">DURAÇÃO</span>
+          <span class="param-value">~5 MIN</span>
+        </div>
+        <div class="param">
+          <span class="param-label">DIFICULDADE</span>
+          <span class="param-value">INICIANTE</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-start">[ INICIAR JORNADA ]</button>
+    </div>
+
+    <div class="footer">
+      <span>▲ APRENDA PROMPTS</span>
+      <span>▼ IA PARA TODOS</span>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 2: GAME ========== -->
+  <section class="screen" id="screen-game">
+    <div class="terminal-header">
+      <span class="terminal-dot"></span>
+      <span class="terminal-title">PROMPT QUEST v1.0</span>
+      <span class="terminal-sub">_ MISSÃO EM CURSO _</span>
+    </div>
+
+    <div class="game-content">
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0/10</span>
+      </div>
+
+      <div class="score-display">
+        PONTOS: <span class="num" id="score-display">0</span>
+      </div>
+
+      <div class="question-area" id="question-area">
+        <div class="question-number" id="question-number">PERGUNTA #1</div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="next-btn-wrap" id="next-btn-wrap"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>▲ 10 PERGUNTAS</span>
+      <span>▼ APRENDA PROMPTS</span>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 3: RESULT ========== -->
+  <section class="screen" id="screen-result">
+    <div class="terminal-header">
+      <span class="terminal-dot"></span>
+      <span class="terminal-title">PROMPT QUEST v1.0</span>
+      <span class="terminal-sub">_ MISSÃO CONCLUÍDA _</span>
+    </div>
+
+    <div class="result-content">
+      <div class="result-player" id="result-player"></div>
+      <div class="result-title" id="result-title">PARABÉNS!</div>
+      <div class="result-score" id="result-score">0/10</div>
+      <div class="result-msg" id="result-msg"></div>
+      <div class="result-detail" id="result-detail">◆ 10 perguntas sobre prompts ◆</div>
+
+      <div class="result-stats">
+        <div class="stat">
+          <span class="stat-label">ACERTOS</span>
+          <span class="stat-value" id="stat-correct">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">ERROS</span>
+          <span class="stat-value" id="stat-wrong">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">APROVEITAMENTO</span>
+          <span class="stat-value" id="stat-pct">0%</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-restart">[ JOGAR NOVAMENTE ]</button>
+      <button class="btn-secondary" id="btn-back">[ VOLTAR AO INÍCIO ]</button>
+    </div>
+
+    <div class="footer">
+      <span>▲ MISSÃO CONCLUÍDA</span>
+      <span>▼ OBRIGADO POR JOGAR</span>
+    </div>
+  </section>
+
+</div>
+
+<!-- ========== SCREEN SECRET: HISTORY (Ctrl+Shift+H) ========== -->
+<section class="screen" id="screen-history">
+  <div class="terminal-header">
+    <span class="terminal-dot"></span>
+    <span class="terminal-title">PROMPT QUEST v1.0</span>
+    <span class="terminal-sub">_ PAINEL SECRETO _</span>
+  </div>
+
+  <div class="history-content">
+    <div class="history-header">
+      <div class="history-secret-badge">ACESSO RESTRITO</div>
+      <h2 class="history-main-title">HISTÓRICO DE RESULTADOS</h2>
+      <p class="history-subtitle">Todos os jogos registrados neste dispositivo</p>
+      <div class="sync-status-wrap">
+        <span class="sync-label">STATUS:</span>
+        <span class="sync-status" id="history-sync-status">LOCAL APENAS</span>
+      </div>
+    </div>
+
+    <div class="history-stats-bar">
+      <div class="history-stat">
+        <span class="history-stat-label">TOTAL DE JOGOS</span>
+        <span class="history-stat-value" id="history-total-games">0</span>
+      </div>
+      <div class="history-stat">
+        <span class="history-stat-label">MELHOR PONTUAÇÃO</span>
+        <span class="history-stat-value" id="history-best-score">0/10</span>
+      </div>
+      <div class="history-stat">
+        <span class="history-stat-label">MÉDIA GERAL</span>
+        <span class="history-stat-value" id="history-avg-score">0%</span>
+      </div>
+    </div>
+
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>JOGADOR</th>
+            <th>ACERTOS</th>
+            <th>DATA</th>
+          </tr>
+        </thead>
+        <tbody id="history-table-body">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cloud-config-section">
+      <div class="cloud-config-title">CONFIGURAÇÃO DA NUVEM</div>
+      <div class="cloud-config-fields">
+        <div class="cloud-field">
+          <label class="cloud-label">API KEY:</label>
+          <input type="password" id="cloud-api-key" class="cloud-input" placeholder="Cole sua API key aqui...">
+        </div>
+        <div class="cloud-field">
+          <label class="cloud-label">BIN ID:</label>
+          <input type="text" id="cloud-bin-id" class="cloud-input" placeholder="Cole o ID do bin aqui...">
+        </div>
+      </div>
+      <div class="cloud-config-actions">
+        <button class="btn-save-config" id="btn-save-config">[ SALVAR CONFIGURAÇÃO ]</button>
+        <button class="btn-test-sync" id="btn-test-sync">[ TESTAR SINCRONIZAÇÃO ]</button>
+      </div>
+      <div class="cloud-config-help">
+        <p>Para sincronizar entre máquinas:</p>
+        <ol>
+          <li>Crie uma conta gratuita em <strong>jsonbin.io</strong></li>
+          <li>Crie um novo "bin" e copie o ID</li>
+          <li>Copie sua API key nas configurações da conta</li>
+          <li>Cole os dados acima e salve</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="history-actions">
+      <button class="btn-danger" id="btn-clear-history">[ APAGAR HISTÓRICO ]</button>
+      <button class="btn-secondary" id="btn-close-history">[ FECHAR ] </button>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
